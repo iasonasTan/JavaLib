@@ -15,23 +15,29 @@ import java.util.function.Supplier;
 /**
  * This class handles app-level resources.
  * <br><b>WARNING:</b> Class must be initialized before use.
- * @see #init()
+ * @see #init(Class)
  */
 public final class Resources {
     /**
      * Fallback image to return if requested image does not exist.
      * @see #loadImage(String, Class)
      */
-    private static BufferedImage mCannotLoadImage;
+    private static BufferedImage sCannotLoadImage;
+
+    /**
+     * This is the class used to load resources from resources root.
+     */
+    private static Class<?> sResourceLoader;
 
     /**
      * Method initializes class and loads fallback image.
      */
-    public static void init() {
+    public static void init(Class<?> resLoader) {
         try {
+            sResourceLoader = resLoader;
             InputStream inputStream = Resources.class.getResourceAsStream("cannotloadimage.png");
             if(inputStream!=null)
-                mCannotLoadImage = ImageIO.read(inputStream);
+                sCannotLoadImage = ImageIO.read(inputStream);
         } catch (IOException ignored) {
             // ignore
         }
@@ -45,7 +51,7 @@ public final class Resources {
      * @return returns loaded or fallback image as {@link BufferedImage}.
      */
     public static BufferedImage loadImage(String path) {
-        return loadImage(path, Resources.class);
+        return loadImage(path, sResourceLoader);
     }
 
     /**
@@ -57,7 +63,7 @@ public final class Resources {
     public static BufferedImage loadImage(final String path, Class<?> clazz) {
         final Supplier<BufferedImage> errorHandler = () -> {
             System.err.println("Cannot load image "+path);
-            return mCannotLoadImage;
+            return sCannotLoadImage;
         };
         try {
             URL rsrcUrl = clazz.getResource(path);
@@ -81,7 +87,7 @@ public final class Resources {
      * @see lib.media.Sound
      */
     public static Clip loadClip(String path) {
-        return loadClip(path, Resources.class);
+        return loadClip(path, sResourceLoader);
     }
 
     /**
@@ -118,7 +124,7 @@ public final class Resources {
      * @see lib.media.Sound
      */
     public static Clip loadOneUseClip(String path) {
-        return loadOneUseClip(path, Resources.class);
+        return loadOneUseClip(path, sResourceLoader);
     }
 
     /**
@@ -148,7 +154,7 @@ public final class Resources {
      * @return Returns contents of file at given {@code path} as {@link String}.
      */
     public static String loadText(String path) {
-        return loadText(path, Resources.class);
+        return loadText(path, sResourceLoader);
     }
 
     /**
