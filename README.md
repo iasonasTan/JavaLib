@@ -1,7 +1,7 @@
 # Java Lib
 
 WARNING:
-This project is being moved into [JeLib](https://github.com/JeLib) and this repo is now READONLY.
+This project is being moved into [JeLib](https://github.com/iasonasTan/JeLib) and this repo is now READONLY.
 
 JavaLib is a library for java applications.
 
