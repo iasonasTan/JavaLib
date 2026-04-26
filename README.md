@@ -1,4 +1,10 @@
 # Java Lib
+
+```
+WARNING:
+This project is being moved into [JeLib](https://github.com/JeLib) and this repo is now READONLY.
+```
+
 JavaLib is a library for java applications.
 
 It includes pre-made classes for games, gui, xml, file handling etc.
